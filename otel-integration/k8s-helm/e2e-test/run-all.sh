@@ -764,7 +764,7 @@ run_workflow_mode() {
 
     log_test "========================================"
     # Base package only; supervisor tests require different chart values and run below.
-    log_test "Workflow Mode (Base): go test -v -run='^TestE2E.*' -skip='^(TestE2E_TargetAllocator_ServiceMonitorMetrics|TestE2E_InstrumentationWebhookNoCRDs)$' ."
+    log_test "Workflow Mode (Base): go test -v -run='^TestE2E.*' -skip='^(TestE2E_TargetAllocator_ServiceMonitorMetrics|TestE2E_InstrumentationWebhookNoCRDs|TestE2E_SDKInjection)$' ."
     log_test "========================================"
 
     export KUBECONFIG="${KUBECONFIG_PATH}"
@@ -777,7 +777,7 @@ run_workflow_mode() {
     (
         cd "${E2E_TEST_DIR}" || exit 1
         go clean -testcache
-        go test -v -run='^TestE2E.*' -skip='^(TestE2E_TargetAllocator_ServiceMonitorMetrics|TestE2E_InstrumentationWebhookNoCRDs)$' $(go list ./... | rg -v '/supervisor$')
+        go test -v -run='^TestE2E.*' -skip='^(TestE2E_TargetAllocator_ServiceMonitorMetrics|TestE2E_InstrumentationWebhookNoCRDs|TestE2E_SDKInjection)$' $(go list ./... | rg -v '/supervisor$')
     )
     local exit_code=$?
     local workflow_end_time

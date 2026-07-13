@@ -214,6 +214,8 @@ Java and .NET use OTLP/gRPC to `http://$(OTEL_NODE_IP):4317`. Python uses OTLP H
 
 The `inject-sdk` annotation enables SDK-only injection mode for applications that are already manually instrumented or cannot be auto-instrumented with language-specific agents. This mode injects only OpenTelemetry SDK environment variables without adding init containers or modifying the application binary.
 
+SDK-only injection uses the common environment variables configured in `opentelemetry-autoinstrumentation.manager.config.instrumentations.spec.env` along with the exporter and sampler configuration from `spec.exporter` and `spec.sampler` in the Helm values.
+
 Use this mode when:
 - Your application is already instrumented with OpenTelemetry SDK
 - You want centralized configuration of SDK behavior via Kubernetes annotations
@@ -227,7 +229,9 @@ metadata:
     instrumentation.opentelemetry.io/inject-sdk: "true"
 ```
 
-The injected environment variables will configure the SDK to send telemetry to the `opentelemetry-agent` DaemonSet on the same node using `http://$(OTEL_NODE_IP):4317`.
+The injected environment variables will configure the SDK to send telemetry to the `opentelemetry-agent` DaemonSet on the same node using the endpoint from `spec.exporter.endpoint` (default: `http://$(OTEL_NODE_IP):4317`).
+
+For more details, see the [OpenTelemetry Operator SDK-only documentation](https://github.com/open-telemetry/opentelemetry-operator/blob/main/docs/auto-instrumentation/languages/sdk-only.md).
 
 > [!IMPORTANT]
 >

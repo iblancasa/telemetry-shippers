@@ -51,6 +51,10 @@ opentelemetry-autoinstrumentation:
             type: parentbased_traceidratio
             argument: "1.0"
           # OTEL_NODE_IP sends telemetry to the agent DaemonSet on the same node as the workload pod.
+          # These environment variables are injected into all auto-instrumented pods, including
+          # SDK-only injection (instrumentation.opentelemetry.io/inject-sdk: "true").
+          # SDK-only injection uses only these common env vars plus the exporter/sampler config above,
+          # without adding init containers or language-specific agents.
           env:
             - name: OTEL_NODE_IP
               valueFrom:
@@ -79,14 +83,6 @@ opentelemetry-autoinstrumentation:
           dotnet:
             # .NET auto-instrumentation currently supports x64 runtimes.
             image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-dotnet:1.15.0
-            env:
-              - name: OTEL_EXPORTER_OTLP_ENDPOINT
-                value: http://$(OTEL_NODE_IP):4317
-              - name: OTEL_EXPORTER_OTLP_PROTOCOL
-                value: grpc
-          # SDK-only injection mode for applications that already have instrumentation
-          # or cannot be auto-instrumented.
-          sdk:
             env:
               - name: OTEL_EXPORTER_OTLP_ENDPOINT
                 value: http://$(OTEL_NODE_IP):4317
