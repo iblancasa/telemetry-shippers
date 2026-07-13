@@ -91,6 +91,7 @@ TestE2E_DeltaToCumulativePreset|linux|component=agent-collector||./values.yaml .
 TestE2E_SpanMetricsConnector|linux|component=agent-collector||./values.yaml ./e2e-test/testdata/values-e2e-span-metrics.yaml
 TestE2E_SpanSanitization|linux|component=agent-collector||./values.yaml ./e2e-test/testdata/values-e2e-test.yaml
 TestE2E_InstrumentationWebhookNoCRDs|linux|component=agent-collector||./values.yaml ./e2e-test/testdata/values-e2e-test.yaml ./e2e-test/testdata/values-e2e-instrumentation-webhook.yaml
+TestE2E_SDKInjection|linux|component=agent-collector||./values.yaml ./e2e-test/testdata/values-e2e-test.yaml ./e2e-test/testdata/values-e2e-sdk-injection.yaml
 EOF
 }
 
